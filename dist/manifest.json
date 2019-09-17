@@ -2,7 +2,7 @@
     "name": "Tracy Agent",
     "version": "1.0",
     "description": "Add agent of Tracy",
-    "manifest_version": 1,
+    "manifest_version": 2,
     "browser_action": {
         "default_icon": {
             "19": "images/ta-19.png",
