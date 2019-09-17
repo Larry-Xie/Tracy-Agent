@@ -1,7 +1,7 @@
 {
     "name": "Tracy Agent",
     "version": "1.0",
-    "description": "Add agent of Tracy",
+    "description": "Agent of Tracy",
     "manifest_version": 2,
     "browser_action": {
         "default_icon": {
@@ -26,11 +26,6 @@
             "all_frames": true
         }
     ],
-    "icons": {
-        "16": "images/ta-16.png",
-        "48": "images/ta-48.png",
-        "128": "images/ta-128.png"
-    },
     "permissions": [
         "webRequest",
         "webRequestBlocking",
