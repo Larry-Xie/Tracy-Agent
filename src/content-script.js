@@ -10,5 +10,5 @@
         };
     };
 
-    loadExternalScript('tm-agent.js');
+    loadExternalScript('tracy-agent.js');
 })();

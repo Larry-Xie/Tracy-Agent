@@ -11,6 +11,6 @@
             })
         };
     }, {
-        urls: ["<all_urls>"]
-    }, ["blocking", "responseHeaders"]);
+        urls: ['<all_urls>']
+    }, ['blocking', 'responseHeaders']);
 })();

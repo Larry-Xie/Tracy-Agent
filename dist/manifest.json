@@ -1,10 +1,12 @@
 {
-    "description": "Add agent of test measurement",
-    "manifest_version": 2,
+    "name": "Tracy Agent",
+    "version": "1.0",
+    "description": "Add agent of Tracy",
+    "manifest_version": 1,
     "browser_action": {
         "default_icon": {
-            "19": "images/tm19.png",
-            "38": "images/tm38.png"
+            "19": "images/ta-19.png",
+            "38": "images/ta-38.png"
         }
     },
     "background": {
@@ -12,8 +14,6 @@
             "background.js"
         ]
     },
-    "name": "TM Agent",
-    "version": "2.0",
     "content_scripts": [
         {
             "js": [
@@ -22,23 +22,21 @@
             "matches": [
                 "<all_urls>"
             ],
-            "exclude_matches": [
-                "http://installer.eng.citrite.net:8081/",
-                "http://localhost:8081/",
-                "http://localhost:3000/",
-                "https://hongfei0712.blob.core.windows.net/bridge/*"
-            ],
             "run_at": "document_end",
             "all_frames": true
         }
     ],
+    "icons": {
+        "16": "images/ta-16.png",
+        "48": "images/ta-48.png",
+        "128": "images/ta-128.png"
+    },
     "permissions": [
         "webRequest",
         "webRequestBlocking",
         "<all_urls>"
     ],
     "web_accessible_resources": [
-        "tm-agent.js",
-        "locate-unique-element.js"
+        "tracy-agent.js"
     ]
 }

@@ -1,16 +1,15 @@
 {
-    "name": "tm-agent",
-    "version": "1.0.1",
-    "description": "",
+    "name": "tracy-agent",
+    "version": "1.0.0",
+    "description": "The Agent Extension for Tracy",
     "scripts": {
         "build": "webpack"
     },
     "repository": {
         "type": "git",
-        "url": "https://sf-source.citrite.net/scm/~hongfeiw/agent-extension.git"
+        "url": "https://github.com/Larry-Xie/Tracy-Agent.git"
     },
-    "author": "hongfei.wu@citrix.com",
-    "license": "ISC",
+    "author": "clisely@gmail.com",
     "devDependencies": {
         "@babel/core": "^7.0.0-beta.49",
         "@babel/preset-env": "^7.0.0-beta.49",
