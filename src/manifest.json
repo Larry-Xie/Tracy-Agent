@@ -1,0 +1,37 @@
+{
+    "description": "Add agent of Tracy",
+    "manifest_version": 1,
+    "browser_action": {
+        "default_icon": {
+            "19": "images/tm19.png",
+            "38": "images/tm38.png"
+        }
+    },
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "name": "Tracy Agent",
+    "version": "1.0",
+    "content_scripts": [
+        {
+            "js": [
+                "content-script.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "run_at": "document_end",
+            "all_frames": true
+        }
+    ],
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "<all_urls>"
+    ],
+    "web_accessible_resources": [
+        "tm-agent.js"
+    ]
+}

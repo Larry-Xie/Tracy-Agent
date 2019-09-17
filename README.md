@@ -1,2 +1,3 @@
 # Tracy-Agent
-The Agent of Tracy
+
+The Agent of Tracy. An extension of Chrome.
