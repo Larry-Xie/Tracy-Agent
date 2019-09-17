@@ -26,7 +26,7 @@ The Agent of Tracy. An extension of Chrome.
 
 ## Publish extension
 
-* Visit `https://chrome.google.com/webstore/developer/dashboard`
+* Visit `https://chrome.google.com/webstore/devconsole/`
 
 * Zip the *dist* folder
 
