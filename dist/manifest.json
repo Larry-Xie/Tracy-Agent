@@ -1,6 +1,6 @@
 {
     "name": "Tracy Agent",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Agent of Tracy",
     "manifest_version": 2,
     "browser_action": {
