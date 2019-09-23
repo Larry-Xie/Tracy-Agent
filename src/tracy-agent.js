@@ -355,10 +355,11 @@
         SINGLE_STOPED_WITH_ERROR: 13
     };
 
-    var REPEAT_TOTAL_COUNT = 10;
-    var REPEAT_INTERVAL = 500;
+    var REPEAT_TOTAL_COUNT = 30;
+    var REPEAT_INTERVAL = 1000;
 
     var controlKeyDown = false;
+    var iframeReadyList = [];
     var isSynced;
     var syncMessage;
     var shiftKeyDown = false;
@@ -870,6 +871,10 @@
                     sendToParent(message);
                     return;
                 }
+                // Collect iframe where agent is ready
+                if (message.type === 'tm:load') {
+                    iframeReadyList.push(getHost(event.origin));
+                }
                 // If message is from child frame and load message, send the sync message to it
                 if (message.type === 'tm:load' && isSynced) {
                     sendSyncMessageToChild(message);
@@ -970,21 +975,39 @@
     };
 
     var sendToChild = function (message, isBroadcast) {
-        var iframeElements = document.querySelectorAll('iframe');
         message.isFromParent = true;
-        if (isBroadcast) {
-            console.log(`${location.href} post broadcast ${message.type} message to child:`);
-            for (var i = 0; i < iframeElements.length; i++) {
-                iframeElements[i].contentWindow.postMessage(JSON.stringify(message), '*');
+        var currentIframeElements = document.querySelectorAll('iframe');
+        if (isBroadcast && currentIframeElements.length) {
+            console.log(`${location.href} post broadcast ${message.type} message to child.`);
+            for (var i = 0; i < currentIframeElements.length; i++) {
+                currentIframeElements[i].contentWindow.postMessage(JSON.stringify(message), '*');
             }
         } else {
-            for (var i = 0; i < iframeElements.length; i++) {
-                if (getHost(iframeElements[i].src) === getHost(message.data.href)) {
-                    console.log(`${location.href} post ${message.type} message to child ${message.data.href}:`);
-                    iframeElements[i].contentWindow.postMessage(JSON.stringify(message), '*');
-                    break;
+            var count = 0;
+            var sendMessageIntervalTimer = setInterval(function () {
+                var messageSent = false;
+                var iframeElements = document.querySelectorAll('iframe');
+                for (var i = 0; i < iframeElements.length; i++) {
+                    if ((getHost(iframeElements[i].src) === getHost(message.data.href)) && iframeReadyList.indexOf(getHost(message.data.href)) !== -1) {
+                        console.log(`${location.href} post ${message.type} message to child ${message.data.href}:`);
+                        iframeElements[i].contentWindow.postMessage(JSON.stringify(message), '*');
+                        messageSent = true
+                        break;
+                    }
                 }
-            }
+
+                if (messageSent) {
+                    sendMessageIntervalTimer && clearInterval(sendMessageIntervalTimer);
+                    sendMessageIntervalTimer = null;
+                    return;
+                }
+
+                if (count++ >= REPEAT_TOTAL_COUNT) {
+                    sendMessageIntervalTimer && clearInterval(sendMessageIntervalTimer);
+                    sendMessageIntervalTimer = null;
+                    sendStatusFailEvent(message.data, 'Can not send message to corresponding frame');
+                }
+            }, REPEAT_INTERVAL);
         }
     };
 
