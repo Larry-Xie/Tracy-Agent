@@ -511,9 +511,14 @@
     };
 
     var fireEvent = function (element, eventName) {
-        var event = document.createEvent('Events');
-        event.initEvent(eventName, true, false);
-        element.dispatchEvent(event);
+        try {
+            var event1 = new MouseEvent(eventName, { 'view': window, 'bubbles': true, 'cancelable': true });
+            element.dispatchEvent(event1);
+        } catch (err) {
+            var event = document.createEvent('Events');
+            event.initEvent(eventName, true, false);
+            element.dispatchEvent(event);
+        }
     };
 
     var executeEvalString = function (evalString) {
@@ -600,7 +605,7 @@
 
         if (element) {
             sendStatusPassEvent(action);
-            fireEvent(element, 'mouseover');
+            fireEvent(element, 'mouseenter');
             return;
         }
 
@@ -610,7 +615,7 @@
                 playActionIntervalTimer && clearInterval(playActionIntervalTimer);
                 playActionIntervalTimer = null;
                 sendStatusPassEvent(action);
-                fireEvent(element, 'mouseover');
+                fireEvent(element, 'mouseenter');
                 return;
             }
 
