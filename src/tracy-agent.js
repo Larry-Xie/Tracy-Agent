@@ -852,6 +852,15 @@
         removeHighlightElement();
     };
 
+    var getDomain = function(url) {
+        var rtn = url.split('/')[2].split(':')[0];
+        var domainParts = rtn.split('.');
+        if (domainParts.length > 2) {
+            rtn = domainParts[domainParts.length - 2] + '.' + domainParts[domainParts.length - 1];
+        }
+        return rtn;
+    }
+
     var getHost = function (url) {
         var pathArray = url.split('/');
         var protocol = pathArray[0];
@@ -988,7 +997,7 @@
                 var messageSent = false;
                 var iframeElements = document.querySelectorAll('iframe');
                 for (var i = 0; i < iframeElements.length; i++) {
-                    if ((getHost(iframeElements[i].src) === getHost(message.data.href)) && iframeReadyList.indexOf(getHost(message.data.href)) !== -1) {
+                    if ((getDomain(iframeElements[i].src) === getDomain(message.data.href)) && iframeReadyList.indexOf(getHost(message.data.href)) !== -1) {
                         console.log(`${location.href} post ${message.type} message to child ${message.data.href}:`);
                         iframeElements[i].contentWindow.postMessage(JSON.stringify(message), '*');
                         messageSent = true
