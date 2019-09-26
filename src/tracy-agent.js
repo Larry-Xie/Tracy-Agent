@@ -872,6 +872,9 @@
     var receive = function (event) {
         try {
             var message = JSON.parse(event.data);
+            if (!message.type || message.type.indexOf('tm') === -1) {
+                return;
+            }
             console.log(`${location.href} reveive ${message.type} message from ${event.origin}:`);
 
             if (!message.isFromParent) {
@@ -893,7 +896,7 @@
 
             // If message is from parent frame and target is not current frame, post it to corresponding child frame
             if (message.isFromParent && message && message.type !== 'tm:sync' && message.type !== 'tm:record'
-                && message.data && message.data.href && message.data.href.indexOf(location.host) === -1) {
+                && message.data && message.data.href && message.data.href.indexOf(getDomain(location.href)) === -1) {
                 sendToChild(message, false);
                 return;
             }
